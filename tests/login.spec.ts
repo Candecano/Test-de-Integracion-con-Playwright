@@ -41,6 +41,15 @@ test.describe('Pruebas Login Sistema de Alumnos', () => {
         await page.pause()
     });
 
+    test('Caso fallido: ingreso con credenciales inválidas 2 ', async ({ page }) => {
+        await page.goto(`${BASE_URL}`);
+        await page.pause()
+        await page.locator('[placeholder="Usuario"]').fill(DNIINVALIDO2); 
+        await page.locator('[placeholder="Contraseña"]').fill(PINVALIDO);
+        await page.getByRole('button', { name: 'Submit' }).click();
+        await expect(page.locator('text="La combinación de usuario y clave no coincide o no tiene permisos"')).toBeVisible();
+        await page.pause()
+    });
 
 
 
