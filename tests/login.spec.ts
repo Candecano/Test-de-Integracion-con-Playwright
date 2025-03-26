@@ -15,18 +15,19 @@ test.describe('Pruebas de Login', () => {
     
     test('Caso exitoso: ingreso con credenciales válidas ', async ({ page }) => {
   
-const browser = await chromium.launch({
-    headless: false
-  });
-  const context = await browser.newContext();
- 
-await page.goto(`${BASE_URL}`);
-await page.pause()
-await page.locator('[placeholder="Usuario"]').fill(DNIVALIDO); 
-await page.locator('[placeholder="Contraseña"]').fill(PVALIDO);
-await page.getByRole('button', { name: 'Submit' }).click();
-await context.close();
-await browser.close();
+        const browser = await chromium.launch({
+            headless: false
+          });
+          const context = await browser.newContext();
+         
+        await page.goto(`${BASE_URL}`);
+        await page.pause()
+        await page.locator('[placeholder="Usuario"]').fill(DNIVALIDO); 
+        await page.locator('[placeholder="Contraseña"]').fill(PVALIDO);
+        await page.getByRole('button', { name: 'Submit' }).click();
+        await context.close();
+        await page.pause()
+        await browser.close();
   
 
     });
