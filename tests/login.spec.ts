@@ -8,10 +8,10 @@ const DNIVALIDO = process.env.DNIVALIDO ?? "";
 const PVALIDO = process.env.PVALIDO ?? "";
 const DNIINVALIDO1 = process.env.DNIINVALIDO1 ?? "";
 const DNIINVALIDO2= process.env.DNIINVALIDO2 ?? "";
-const PASS_INVALIDO = process.env.PASS_INVALIDO ?? "";
+const PINVALIDO = process.env.PINVALIDO ?? "";
 
 
-test.describe('Pruebas de Login', () => {
+test.describe('Pruebas Login Sistema de Alumnos', () => {
     
     test('Caso exitoso: ingreso con credenciales válidas ', async ({ page }) => {
   
@@ -26,11 +26,23 @@ test.describe('Pruebas de Login', () => {
         await page.locator('[placeholder="Contraseña"]').fill(PVALIDO);
         await page.getByRole('button', { name: 'Submit' }).click();
         await context.close();
-        await page.pause()
+        await expect(page).toHaveURL(`${BASE_URL}Proteccion/Inicio.aspx`);
         await browser.close();
-  
 
     });
+
+    test('Caso fallido: ingreso con credenciales inválidas 1 ', async ({ page }) => {
+        await page.goto(`${BASE_URL}`);
+        await page.pause()
+        await page.locator('[placeholder="Usuario"]').fill(DNIINVALIDO1); 
+        await page.locator('[placeholder="Contraseña"]').fill(PINVALIDO);
+        await page.getByRole('button', { name: 'Submit' }).click();
+        await expect(page.locator('text="La combinación de usuario y clave no coincide"')).toBeVisible();
+        await page.pause()
+    });
+
+
+
 
    
 });
